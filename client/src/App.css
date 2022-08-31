@@ -1,0 +1,148 @@
+body * {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    border-radius: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dark {
+    background-color: #2f4f4f;
+    color: #ffd700;
+}
+
+.light {
+    background-color: gainsboro;
+    color: black;
+}
+
+.App {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 97vh;
+    width: 98vw;
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: 4fr 1fr 1fr 1fr;
+    margin: 10px;
+    text-align: center;
+}
+
+.app-header {
+    font-size: 2rem;
+    text-align: left;
+}
+
+.nav-item {
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.page-header {
+    font-size: 2rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.theme-change {
+    align-self: center;
+    border-radius: 50%;
+    margin: 5px 30px;
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 15px;
+    color: black;
+    background-color: gold;
+}
+
+.theme-change:hover {
+    background-color: darkorange;
+}
+
+.search {
+    margin: 15px;
+    width: 87;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    direction: rtl;
+}
+
+.search-input {
+    font-size: 1rem;
+    margin: 5px 10px;
+    text-align: right;
+    height: 60%;
+}
+
+.search-input:focus {
+    background-color: wheat;
+    color: black;
+}
+
+.search-button {
+    font-size: 1.5rem;
+    margin: 0px 15px;
+}
+
+.search-button:hover {
+    background-color: darkorange;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 98vw;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    border: 2px solid gold;
+    text-align: center;
+}
+
+.item h3 {
+    font-size: calc(10px + 3vmin);
+    align-self: center;
+    text-transform: capitalize;
+}
+
+.item button {
+    font-size: calc(2.5vmin);
+    place-self: center;
+    border: 0;
+    margin: 5px;
+}
+
+.item button:hover {
+    background-color: red;
+}
+
+.item img {
+    width: 18vw;
+    height: 18vw;
+    place-self: center;
+    margin: 5px 0px;
+}
+.order-list {
+    width: 97vw;
+    display: flex;
+    flex-direction: column;
+}
+.order-item {
+    width: 97vw;
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0px;
+    border: 2px solid gold;
+}
+.order-item span, h3 {
+    margin: 5px;
+}
