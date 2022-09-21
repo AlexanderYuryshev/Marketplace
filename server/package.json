@@ -1,9 +1,11 @@
 {
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "concurrently": "^7.3.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.19",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
@@ -12,9 +14,10 @@
     "sequelize-cli": "^6.4.1"
   },
   "scripts": {
-    "dbr": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
+    "db": "npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
     "server": "nodemon index.js",
     "client": "npm start --prefix ../client",
-    "dev": "concurrently \"npm run client\" \"npm run server\" "
+    "dev": "concurrently \"npm run client\" \"npm run server\" ",
+    "dependencies": "npm i && npm i --prefix ../client"
   }
 }

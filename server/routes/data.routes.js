@@ -132,15 +132,9 @@ router.get("/cart", async (req, res) => {
             where: {
                 UserId: req.headers.userid,
             },
-            include: [models.User, models.Purchase],
+            include: [models.Purchase],
         });
-        const purchases = await models.Purchase.findAll({
-            where: {
-                CartId: cart.id,
-            },
-            include: [models.Product],
-        });
-        res.json(purchases);
+        res.json(cart);
     } catch (error) {
         console.log(error.message);
     }
@@ -214,10 +208,6 @@ router.delete("/cart", async (req, res) => {
         },
         include: [models.User, models.Purchase],
     });
-    // if (!cart) {
-    //     cart = await models.Cart.create();
-    //     await cart.setUser(req.body.UserId);
-    // }
     await cart.setProducts([...req.body.products]);
     res.json(cart);
 });

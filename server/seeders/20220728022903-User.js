@@ -5,12 +5,12 @@ module.exports = {
         await queryInterface.bulkInsert("User", [
             {
                 name: "Tisha",
-                password: "",
+                password: "123456",
                 deliveryAddress: "Australia, Melbourn"
             },
             {
                 name: "Uma",
-                password: "",
+                password: "123456",
                 deliveryAddress: "Italia, Rome"
             },
         ]);

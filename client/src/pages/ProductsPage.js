@@ -20,18 +20,16 @@ export const ProductsPage = () => {
             productId: id,
             productAmount: amount,
         };
-        console.log("Req body: ", reqBody);
         const product = products.find((i) => +i.id === +id);
-        // console.log("Pr: ", product);
         if (e.target.name !== "sub") {
             reqBody.productAmount += 1;
-            await request(`${auth.url}cart`, "PUT", reqBody);
             store.dispatch(ADD_TO_CART(id));
+            await request(`${auth.url}cart`, "PUT", reqBody);
         } else {
             if (product.amount > 0) {
                 reqBody.productAmount -= 1;
-                await request(`${auth.url}cart`, "PUT", reqBody);
                 store.dispatch(REMOVE_FROM_CART(id));
+                await request(`${auth.url}cart`, "PUT", reqBody);
             }
         }
     };
@@ -58,19 +56,15 @@ export const ProductsPage = () => {
                                 alt="Product here"
                             />
                             <h3>{product.title}</h3>
-                            {/* <p>
-                            {product.description.length > 50
-                                ? product.description.slice(0, 49) + "..."
-                                : product.description}
-                        </p> */}
                             <span>{product.cost + " tugrics"}</span>
                             {product.amount === 0 ? (
-                                <button id={product.id} value={0} onClick={addHandler}>
+                                <button name="add" id={product.id} value={0} onClick={addHandler}>
                                     Add to cart
                                 </button>
                             ) : (
                                 <form>
                                     <button
+                                        name="add"
                                         id={product.id}
                                         value={product.amount}
                                         onClick={addHandler}

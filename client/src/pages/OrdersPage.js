@@ -8,7 +8,7 @@ export const OrdersPage = () => {
 
     const calculateCost = useCallback((products) => {
         return products.reduce(function (accumulator, currentValue) {
-            return accumulator + currentValue.cost;
+            return accumulator + (currentValue.cost * currentValue.amount);
         }, 0);
     }, []);
 

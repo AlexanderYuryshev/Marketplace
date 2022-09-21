@@ -1,15 +1,16 @@
 const express = require("express");
 const models = require("./models");
-const authrouter = require("./routes/auth.routes.js");
-const datarouter = require("./routes/data.routes.js");
+const authRouter = require("./routes/auth.routes.js");
+const dataRouter = require("./routes/data.routes.js");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/", datarouter);
-app.use("/", authrouter);
+app.use("/", dataRouter);
+app.use("/", authRouter);
 
 const port = 5005;
 

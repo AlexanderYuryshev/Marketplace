@@ -21,9 +21,21 @@ function reducer(state = initialState, action) {
                 }),
             };
         case "SET_CART":
-            return { ...state, cartProducts: action.products };
+            return {
+                ...state,
+                products: state.products.map((value) => {
+                    for (let j = 0; j < action.products.length; j++) {
+                        if (value.id === action.products[j].ProductId) {
+                            return {...value, amount: action.products[j].amount};
+                        }
+                    }
+                }),
+            };
         case "CLEAR_CART":
-            return { ...state, cartProducts: [] };
+            let cleanedProducts = action.products.map((i) => {
+                return { ...i, amount: 0 };
+            });
+            return { ...state, products: cleanedProducts };
         case "REMOVE_FROM_CART":
             return {
                 ...state,

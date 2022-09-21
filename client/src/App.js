@@ -11,7 +11,7 @@ import "./App.css";
 import { useHttp } from "./hooks/http.hook.js";
 
 function App() {
-    const { login, logout, userId } = useAuth();
+    const { login, logout, userId, token } = useAuth();
     const { request } = useHttp();
     const isAuthentificated = !!userId;
     const routes = useRoutes(isAuthentificated);
@@ -32,7 +32,8 @@ function App() {
         try {
             const data = await request(`${url}cart`, "GET", null, { UserId: userId });
             if (data) {
-                store.dispatch(SET_CART(data));
+                const sortedPurchases = data.Purchases.sort((a, b) => a.ProductId - b.ProductId);
+                store.dispatch(SET_CART(sortedPurchases));
             }
         } catch (e) {
             console.log(e);
@@ -57,7 +58,7 @@ function App() {
             }}
         >
             <Router>
-                <Navbar className="dark" />
+                <Navbar />
                 <div className="container dark">{routes}</div>
             </Router>
         </AuthContext.Provider>

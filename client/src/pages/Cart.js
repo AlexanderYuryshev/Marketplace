@@ -2,26 +2,35 @@ import { React, useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext.js";
 import store from "../redux/store.js";
-import { CLEAR_CART, REMOVE_FROM_CART } from "../redux/actions.js";
+import { ADD_TO_CART, CLEAR_CART, REMOVE_FROM_CART } from "../redux/actions.js";
 import { useHttp } from "../hooks/http.hook.js";
 
 export const Cart = () => {
     const auth = useContext(AuthContext);
-    let products = useSelector((state) => state.cartProducts);
-    console.log(products);
+    let products = useSelector(state => state.products).filter(product => product.amount != 0);
     const { request } = useHttp();
 
-    const removeFromCart = async (e) => {
-        const id = e.target.value;
-        const reqBody = {
+    const addHandler = async (e) => {
+        const id = +e.target.id;
+        const amount = +e.target.value;
+        e.preventDefault();
+
+        let reqBody = {
             UserId: auth.userId,
-            products: products.filter((item) => +item.id !== +id).map((item) => item.id),
+            productId: id,
+            productAmount: amount,
         };
-        try {
-            await request(`${auth.url}cart`, "DELETE", reqBody);
-            store.dispatch(REMOVE_FROM_CART(e.target.value));
-        } catch (e) {
-            console.log(e);
+        const product = products.find((i) => +i.id === +id);
+        if (e.target.name !== "sub") {
+            reqBody.productAmount += 1;
+            store.dispatch(ADD_TO_CART(id));
+            await request(`${auth.url}cart`, "PUT", reqBody);
+        } else {
+            if (product.amount > 0) {
+                reqBody.productAmount -= 1;
+                store.dispatch(REMOVE_FROM_CART(id));
+                await request(`${auth.url}cart`, "PUT", reqBody);
+            }
         }
     };
 
@@ -38,7 +47,6 @@ export const Cart = () => {
                 products: ids,
             };
             await request(`${auth.url}my-orders`, "POST", data);
-            store.dispatch(CLEAR_CART());
         } else {
             alert("You should add something to the cart before creating an order");
         }
@@ -46,7 +54,7 @@ export const Cart = () => {
 
     const calculateCost = useCallback((products) => {
         return products.reduce(function (accumulator, currentValue) {
-            return accumulator + currentValue.Product.cost;
+            return accumulator + (currentValue.cost * currentValue.amount);
         }, 0);
     }, []);
 
@@ -56,19 +64,36 @@ export const Cart = () => {
             <div className="list">
                 {products[0] &&
                     products.map((product) => (
-                        <div key={"list-product-" + product.Product.id} className="item">
-                            <h3>{product.Product.title}</h3>
-                            {/* <p>
-                                {product.description.length > 50
-                                    ? product.description.slice(0, 49) + "..."
-                                    : product.description}
-                            </p> */}
-                            <span>{product.Product.cost} tugrics</span>
-                            <span>{product.Product.vendorInfo}</span>
+                        <div key={"list-product-" + product.id} className="item">
+                            <h3>{product.title}</h3>
+                            <span>{product.cost} tugrics</span>
+                            <span>{product.vendorInfo}</span>
                             <span>Amount: {product.amount}</span>
-                            <button value={product.Product.id} onClick={removeFromCart}>
-                                Remove from cart
-                            </button>
+                            {product.amount === 0 ? (
+                                <button name="add" id={product.id} value={0} onClick={addHandler}>
+                                    Add to cart
+                                </button>
+                            ) : (
+                                <form>
+                                    <button
+                                        name="add"
+                                        id={product.id}
+                                        value={product.amount}
+                                        onClick={addHandler}
+                                    >
+                                        +
+                                    </button>
+                                    <span>{product.amount}</span>
+                                    <button
+                                        name="sub"
+                                        id={product.id}
+                                        value={product.amount}
+                                        onClick={addHandler}
+                                    >
+                                        -
+                                    </button>
+                                </form>
+                            )}
                         </div>
                     ))}
             </div>
