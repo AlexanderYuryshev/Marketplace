@@ -1,13 +1,13 @@
-import { React, useCallback, useContext } from "react";
+import { React, useCallback, useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext.js";
 import store from "../redux/store.js";
-import { ADD_TO_CART, CLEAR_CART, REMOVE_FROM_CART } from "../redux/actions.js";
+import { ADD_TO_CART, CLEAR_CART, SET_CART, REMOVE_FROM_CART } from "../redux/actions.js";
 import { useHttp } from "../hooks/http.hook.js";
 
 export const Cart = () => {
     const auth = useContext(AuthContext);
-    let products = useSelector(state => state.products).filter(product => product.amount != 0);
+    let products = useSelector((state) => state.products).filter((product) => product.amount !== 0);
     const { request } = useHttp();
 
     const addHandler = async (e) => {
@@ -46,6 +46,7 @@ export const Cart = () => {
                 deliveryAddress: "Moscow, Kremlin",
                 products: ids,
             };
+            store.dispatch(CLEAR_CART());
             await request(`${auth.url}my-orders`, "POST", data);
         } else {
             alert("You should add something to the cart before creating an order");
@@ -54,7 +55,7 @@ export const Cart = () => {
 
     const calculateCost = useCallback((products) => {
         return products.reduce(function (accumulator, currentValue) {
-            return accumulator + (currentValue.cost * currentValue.amount);
+            return accumulator + currentValue.cost * currentValue.amount;
         }, 0);
     }, []);
 
@@ -68,10 +69,15 @@ export const Cart = () => {
                             <h3>{product.title}</h3>
                             <span>{product.cost} tugrics</span>
                             <span>{product.vendorInfo}</span>
-                            <span>Amount: {product.amount}</span>
-                            {product.amount === 0 ? (
-                                <button name="add" id={product.id} value={0} onClick={addHandler}>
-                                    Add to cart
+                            {product.amount === 1 && <span>Amount: {product.amount}</span>}
+                            {product.amount === 1 ? (
+                                <button
+                                    name="sub"
+                                    id={product.id}
+                                    value={product.amount}
+                                    onClick={addHandler}
+                                >
+                                    Remove from cart
                                 </button>
                             ) : (
                                 <form>

@@ -1,14 +1,16 @@
 import { React, useContext, useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext.js";
 
 export const OrdersPage = () => {
     const auth = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
-    const UserId = localStorage.getItem("UserId");
+    const userId = auth.userId;
+    const products = useSelector((state) => state.products);
 
     const calculateCost = useCallback((products) => {
         return products.reduce(function (accumulator, currentValue) {
-            return accumulator + (currentValue.cost * currentValue.amount);
+            return accumulator + currentValue.cost * currentValue.amount;
         }, 0);
     }, []);
 
@@ -18,17 +20,28 @@ export const OrdersPage = () => {
                 const res = await fetch(`${auth.url}my-orders`, {
                     method: "GET",
                     headers: {
-                        UserId: +UserId,
+                        UserId: +userId,
                     },
                 });
                 const data = await res.json();
+                for (let i = 0; i < data.length; i++) {
+                    data[i].Purchases.map((value) => {
+                        for (let j = 0; j < products.length; j++) {
+                            if (+value.ProductId === +products[j].id) {
+                                value.cost = products[j].cost;
+                                return value;
+                            }
+                        }
+                        return value;
+                    });
+                }
                 setOrders([...data]);
             } catch (e) {
                 console.log(e);
             }
         };
         getOrders();
-    }, []);
+    }, [userId, auth.url, products]);
 
     return (
         <>
@@ -46,14 +59,9 @@ export const OrdersPage = () => {
                 {orders.map((order) => (
                     <div key={"list-order-" + order.id} className="order-item">
                         <h3>Order ID: {order.id}</h3>
-                        {/* <p>
-                            {product.description.length > 50
-                                ? product.description.slice(0, 49) + "..."
-                                : product.description}
-                        </p> */}
-                        {/* <span>{calculateCost(order.products)}</span> */}
                         <span>
-                            {order.Products[0] && `Cost: ${calculateCost(order.Products)} tugrics`}
+                            {order.Purchases[0] &&
+                                `Cost: ${calculateCost(order.Purchases)} tugrics`}
                         </span>
                         <span>Order Date: {order.orderDate}</span>
                         <span>Delivery Date: {order.deliveryDate}</span>

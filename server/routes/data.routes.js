@@ -12,17 +12,17 @@ router.post("/my-orders", async (req, res) => {
             orderDate: req.body.orderDate,
             status: "In progress",
             deliveryDate: req.body.deliveryDate,
-            deliveryAddress: req.body.deliveryAddress,
+            deliveryAddress: req.body.deliveryAddress
         });
         const cart = await models.Cart.findOne({
             where: {
                 UserId: req.body.UserId,
             },
-            include: [models.User, models.Product],
+            include: [models.User, models.Purchase],
         });
         await order.setUser(req.body.UserId);
-        await order.addProducts(req.body.products);
-        await cart.setProducts([]);
+        await order.addPurchases(cart.Purchases);
+        await cart.setPurchases([]);
         res.json("Order was added");
     } catch (error) {
         console.log(error.message);
@@ -36,7 +36,7 @@ router.get("/my-orders", async (req, res) => {
             where: {
                 UserId: req.headers.userid,
             },
-            include: [models.User, models.Product],
+            include: [models.User, models.Purchase],
         });
         res.json(orders);
     } catch (error) {
@@ -169,7 +169,6 @@ router.post("/cart", async (req, res) => {
 
 // `-` PUT /cart
 router.put("/cart", async (req, res) => {
-    console.log("Receive: ", req.body.product);
     let cart = await models.Cart.findOne({
         where: {
             UserId: req.body.UserId,
@@ -201,7 +200,6 @@ router.put("/cart", async (req, res) => {
 
 // `-` DELETE /cart
 router.delete("/cart", async (req, res) => {
-    console.log("Id = ", req.body.UserId, ", products: ", req.body.products);
     let cart = await models.Cart.findOne({
         where: {
             UserId: req.body.UserId,

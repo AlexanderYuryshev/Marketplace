@@ -13,7 +13,7 @@ import { useHttp } from "./hooks/http.hook.js";
 function App() {
     const { login, logout, userId, token } = useAuth();
     const { request } = useHttp();
-    const isAuthentificated = !!userId;
+    const isAuthentificated = !!token;
     const routes = useRoutes(isAuthentificated);
     const url = "http://localhost:5005/";
 
@@ -42,7 +42,7 @@ function App() {
 
     useEffect(() => {
         getProducts();
-        if (userId) {
+        if (isAuthentificated) {
             getCartProducts();
         }
     });
