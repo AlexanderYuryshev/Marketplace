@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             orderDate: DataTypes.DATEONLY,
             status: DataTypes.STRING,
+            cost: DataTypes.DOUBLE,
             deliveryDate: DataTypes.DATEONLY,
             deliveryAddress: DataTypes.TEXT,
             UserId: {

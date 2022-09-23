@@ -1,13 +1,14 @@
-import { React, useCallback, useContext, useEffect } from "react";
+import { React, useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext.js";
 import store from "../redux/store.js";
-import { ADD_TO_CART, CLEAR_CART, SET_CART, REMOVE_FROM_CART } from "../redux/actions.js";
+import { ADD_TO_CART, CLEAR_CART, REMOVE_FROM_CART } from "../redux/actions.js";
 import { useHttp } from "../hooks/http.hook.js";
 
 export const Cart = () => {
     const auth = useContext(AuthContext);
     let products = useSelector((state) => state.products).filter((product) => product.amount !== 0);
+    console.log("Cart:", products);
     const { request } = useHttp();
 
     const addHandler = async (e) => {
@@ -45,6 +46,7 @@ export const Cart = () => {
                 deliveryDate: date,
                 deliveryAddress: "Moscow, Kremlin",
                 products: ids,
+                cost: calculateCost(products)
             };
             store.dispatch(CLEAR_CART());
             await request(`${auth.url}my-orders`, "POST", data);
@@ -59,9 +61,16 @@ export const Cart = () => {
         }, 0);
     }, []);
 
+    const calculateAmount = useCallback((products) => {
+        return products.reduce(function (accumulator, currentValue) {
+            return accumulator + currentValue.amount;
+        }, 0);
+    }, []);
+
     return (
         <>
             <h2 className="page-header">Cart</h2>
+            {products[0] ? null : <h3>Cart is empty</h3>}
             <div className="list">
                 {products[0] &&
                     products.map((product) => (
@@ -69,45 +78,33 @@ export const Cart = () => {
                             <h3>{product.title}</h3>
                             <span>{product.cost} tugrics</span>
                             <span>{product.vendorInfo}</span>
-                            {product.amount === 1 && <span>Amount: {product.amount}</span>}
-                            {product.amount === 1 ? (
+                            <form>
+                                <button
+                                    name="add"
+                                    id={product.id}
+                                    value={product.amount}
+                                    onClick={addHandler}
+                                >
+                                    +
+                                </button>
+                                <span>{product.amount}</span>
                                 <button
                                     name="sub"
                                     id={product.id}
                                     value={product.amount}
                                     onClick={addHandler}
                                 >
-                                    Remove from cart
+                                    -
                                 </button>
-                            ) : (
-                                <form>
-                                    <button
-                                        name="add"
-                                        id={product.id}
-                                        value={product.amount}
-                                        onClick={addHandler}
-                                    >
-                                        +
-                                    </button>
-                                    <span>{product.amount}</span>
-                                    <button
-                                        name="sub"
-                                        id={product.id}
-                                        value={product.amount}
-                                        onClick={addHandler}
-                                    >
-                                        -
-                                    </button>
-                                </form>
-                            )}
+                            </form>
                         </div>
                     ))}
             </div>
-            <div className="list">
+            {products[0] && <div className="list">
                 <button onClick={createOrder}>Create order</button>
                 <h3>Total cost: {calculateCost(products)} tugrics</h3>
-                <h3>Product count: {products.length}</h3>
-            </div>
+                <h3>Product count: {calculateAmount(products)}</h3>
+            </div>}
         </>
     );
 };

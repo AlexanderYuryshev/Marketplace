@@ -22,7 +22,7 @@ export const useRoutes = (isAuthentificated) => {
             <Route path="/" exact element={<ProductsPage isFiltered={false} />} />
             <Route path="/login" element={<AuthPage />} />
             <Route path="/my-orders" exact element={<Navigate to="/login" replace={true} />} />
-            <Route path="*" element={<Navigate to="/" replace={true} />} />
+            <Route path="*" element={<Navigate to="/login" replace={true} />} />
         </Routes>
     );
 };

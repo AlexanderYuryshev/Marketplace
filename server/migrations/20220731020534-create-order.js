@@ -14,6 +14,9 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      cost: {
+        type: Sequelize.DOUBLE
+      },
       deliveryDate: {
         type: Sequelize.DATEONLY
       },

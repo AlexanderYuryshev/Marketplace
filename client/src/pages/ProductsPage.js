@@ -37,13 +37,6 @@ export const ProductsPage = () => {
     return (
         <>
             <div className="search">
-                <input list="sort" placeholder="Sort by" className="search-input"></input>
-                <datalist id="sort">
-                    <option value="Lowest price first"></option>
-                    <option value="Highest price first"></option>
-                    <option value="From A to Z"></option>
-                    <option value="From Z to A"></option>
-                </datalist>
                 <input type="text" placeholder="Search" className="search-input"></input>
             </div>
 
@@ -51,37 +44,44 @@ export const ProductsPage = () => {
                 {products[0] &&
                     products.map((product) => (
                         <div key={"list-product-" + product.id} className="item">
-                            <img
-                                src={`./products-images/${product.title.toLowerCase()}.png`}
-                                alt="Product here"
-                            />
+                            <img src={`./products-images/${product.id}.png`} alt="Product here" />
                             <h3>{product.title}</h3>
-                            <span>{product.cost + " tugrics"}</span>
-                            {product.amount === 0 ? (
-                                <button name="add" id={product.id} value={0} onClick={addHandler}>
-                                    Add to cart
-                                </button>
+                            {product.amount > 0 ? (
+                                <span>{product.cost * product.amount}&#8381; for {product.amount} items</span>
                             ) : (
-                                <form>
+                                <span>{product.cost}&#8381;</span>
+                            )}
+                            {auth.isAuthentificated &&
+                                (product.amount === 0 ? (
                                     <button
                                         name="add"
                                         id={product.id}
-                                        value={product.amount}
+                                        value={0}
                                         onClick={addHandler}
                                     >
-                                        +
+                                        Add to cart
                                     </button>
-                                    <span>{product.amount}</span>
-                                    <button
-                                        name="sub"
-                                        id={product.id}
-                                        value={product.amount}
-                                        onClick={addHandler}
-                                    >
-                                        -
-                                    </button>
-                                </form>
-                            )}
+                                ) : (
+                                    <form>
+                                        <button
+                                            name="add"
+                                            id={product.id}
+                                            value={product.amount}
+                                            onClick={addHandler}
+                                        >
+                                            +
+                                        </button>
+                                        <span>{product.amount}</span>
+                                        <button
+                                            name="sub"
+                                            id={product.id}
+                                            value={product.amount}
+                                            onClick={addHandler}
+                                        >
+                                            -
+                                        </button>
+                                    </form>
+                                ))}
                         </div>
                     ))}
             </div>

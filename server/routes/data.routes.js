@@ -12,7 +12,8 @@ router.post("/my-orders", async (req, res) => {
             orderDate: req.body.orderDate,
             status: "In progress",
             deliveryDate: req.body.deliveryDate,
-            deliveryAddress: req.body.deliveryAddress
+            deliveryAddress: req.body.deliveryAddress,
+            cost: req.body.cost
         });
         const cart = await models.Cart.findOne({
             where: {
@@ -21,7 +22,7 @@ router.post("/my-orders", async (req, res) => {
             include: [models.User, models.Purchase],
         });
         await order.setUser(req.body.UserId);
-        await order.addPurchases(cart.Purchases);
+        await order.setPurchases(cart.Purchases);
         await cart.setPurchases([]);
         res.json("Order was added");
     } catch (error) {

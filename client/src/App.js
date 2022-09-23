@@ -9,6 +9,7 @@ import { ADD_PRODUCTS, SET_CART } from "./redux/actions.js";
 
 import "./App.css";
 import { useHttp } from "./hooks/http.hook.js";
+import { Footer } from "./components/Footer.js";
 
 function App() {
     const { login, logout, userId, token } = useAuth();
@@ -59,7 +60,8 @@ function App() {
         >
             <Router>
                 <Navbar />
-                <div className="container dark">{routes}</div>
+                <div className="container">{routes}</div>
+                <Footer />
             </Router>
         </AuthContext.Provider>
     );
