@@ -100,10 +100,10 @@ export const Cart = () => {
                         </div>
                     ))}
             </div>
-            {products[0] && <div className="list">
+            {products[0] && <div className="column-container">
+                <h3>Total cost: {calculateCost(products)}&#8381;</h3>
+                <h3>Products amount: {calculateAmount(products)}</h3>
                 <button onClick={createOrder}>Create order</button>
-                <h3>Total cost: {calculateCost(products)} tugrics</h3>
-                <h3>Product count: {calculateAmount(products)}</h3>
             </div>}
         </>
     );

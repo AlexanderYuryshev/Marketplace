@@ -64,10 +64,6 @@ a {
     margin: 20px 10px;
 }
 
-.app-header:hover {
-    transform: scale(1.1);
-}
-
 .nav-item {
     text-decoration: none;
     font-size: 1.2rem;
@@ -97,6 +93,12 @@ a {
     transform: scale(1.2);
 }
 
+.auth-input {
+    font-size: 1rem;
+    margin: 10px 20px;
+    min-width: 20%;
+}
+
 .page-header {
     font-size: 2rem;
     text-align: center;
@@ -105,7 +107,7 @@ a {
 
 .container {
     padding-top: 10vh;
-    min-height: 62vh;
+    min-height: 58.5vh;
 }
 
 .theme-change {
@@ -200,6 +202,30 @@ a {
     margin: 5px 0px;
 }
 
+.column-container {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.column-container button {
+    text-decoration: none;
+    font-size: 1.2rem;
+    border: 2px solid var(--text-color);
+    min-width: 20%;
+    min-height: 100%;
+    margin: 10px 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.column-container button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    cursor: pointer;
+}
+
 .order-list {
     width: 97vw;
     display: flex;
@@ -221,7 +247,7 @@ h3 {
 }
 
 .footer {
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 2vh 10%;
     background-color: var(--text-color);
     color: var(--bg-color);

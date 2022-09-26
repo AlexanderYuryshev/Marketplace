@@ -1,6 +1,7 @@
 import { React } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthPage } from "./pages/AuthPage.js";
+import { LoginPage } from "./pages/LoginPage.js";
+import { SignupPage } from "./pages/SignupPage.js";
 import { Cart } from "./pages/Cart.js";
 import { OrdersPage } from "./pages/OrdersPage.js";
 import { ProductsPage } from "./pages/ProductsPage.js";
@@ -20,7 +21,8 @@ export const useRoutes = (isAuthentificated) => {
     return (
         <Routes>
             <Route path="/" exact element={<ProductsPage isFiltered={false} />} />
-            <Route path="/login" element={<AuthPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/my-orders" exact element={<Navigate to="/login" replace={true} />} />
             <Route path="*" element={<Navigate to="/login" replace={true} />} />
         </Routes>

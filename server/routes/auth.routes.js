@@ -2,7 +2,7 @@ const { Router } = require("express");
 const models = require("../models");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const router = Router();
 
 // POST /signup
@@ -25,7 +25,7 @@ router.post(
                     message: "Incorrect data for registration",
                 });
             } else {
-                const { name, password } = req.body;
+                const { name, password, deliveryAddress } = req.body;
                 const candidate = await models.User.findOne({ where: { name: name } });
 
                 if (candidate) {
@@ -34,7 +34,11 @@ router.post(
                 console.log("Search completed");
                 const hashedPwd = await bcrypt.hash(password, 12);
                 console.log("Pwd hashed");
-                await models.User.create({ name: name, password: hashedPwd });
+                await models.User.create({
+                    name: name,
+                    password: hashedPwd,
+                    deliveryAddress: deliveryAddress,
+                });
                 console.log("User created");
 
                 res.status(201).json({ message: "Registered successfully" });
@@ -71,11 +75,9 @@ router.post(
                     res.status(400).json({ message: "Incorrect password" });
                     return;
                 }
-                const token = jwt.sign(
-                    {userId: user.id},
-                    "ayuryshev_pernProject1!",
-                    {expiresIn: '1h'}
-                )
+                const token = jwt.sign({ userId: user.id }, "ayuryshev_pernProject1!", {
+                    expiresIn: "1h",
+                });
 
                 res.status(200).json({ userId: user.id, name: name, token: token });
             }

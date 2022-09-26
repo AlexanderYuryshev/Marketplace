@@ -44,7 +44,7 @@ export const ProductsPage = () => {
                 {products[0] &&
                     products.map((product) => (
                         <div key={"list-product-" + product.id} className="item">
-                            <img src={`./products-images/${product.id}.png`} alt="Product here" />
+                            <img src={`./products-images/${product.id}.png`} alt="Product here" width={100 + "%"} height={60 + "%"}/>
                             <h3>{product.title}</h3>
                             {product.amount > 0 ? (
                                 <span>{product.cost * product.amount}&#8381; for {product.amount} items</span>
