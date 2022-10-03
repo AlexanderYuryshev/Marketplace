@@ -4,6 +4,7 @@ import { useHttp } from "../hooks/http.hook.js";
 import store from "../redux/store.js";
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../redux/actions.js";
 import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 export const ProductsPage = () => {
     const auth = useContext(AuthContext);
@@ -43,46 +44,55 @@ export const ProductsPage = () => {
             <div className="list">
                 {products[0] &&
                     products.map((product) => (
-                        <div key={"list-product-" + product.id} className="item">
-                            <img src={`./products-images/${product.id}.png`} alt="Product here" width={100 + "%"} height={60 + "%"}/>
-                            <h3>{product.title}</h3>
-                            {product.amount > 0 ? (
-                                <span>{product.cost * product.amount}&#8381; for {product.amount} items</span>
-                            ) : (
-                                <span>{product.cost}&#8381;</span>
-                            )}
-                            {auth.isAuthentificated &&
-                                (product.amount === 0 ? (
-                                    <button
-                                        name="add"
-                                        id={product.id}
-                                        value={0}
-                                        onClick={addHandler}
-                                    >
-                                        Add to cart
-                                    </button>
+                        <NavLink to={"product-" + product.id}>
+                            <div key={"list-product-" + product.id} className="item">
+                                <img
+                                    src={`./products-images/${product.id}.png`}
+                                    alt="Product here"
+                                    className="item-img"
+                                />
+                                <h3>{product.title}</h3>
+                                {product.amount > 0 ? (
+                                    <span>
+                                        {product.cost * product.amount}&#8381; for {product.amount}{" "}
+                                        items
+                                    </span>
                                 ) : (
-                                    <form>
+                                    <span>{product.cost}&#8381;</span>
+                                )}
+                                {auth.isAuthentificated &&
+                                    (product.amount === 0 ? (
                                         <button
                                             name="add"
                                             id={product.id}
-                                            value={product.amount}
+                                            value={0}
                                             onClick={addHandler}
                                         >
-                                            +
+                                            Add to cart
                                         </button>
-                                        <span>{product.amount}</span>
-                                        <button
-                                            name="sub"
-                                            id={product.id}
-                                            value={product.amount}
-                                            onClick={addHandler}
-                                        >
-                                            -
-                                        </button>
-                                    </form>
-                                ))}
-                        </div>
+                                    ) : (
+                                        <form>
+                                            <button
+                                                name="add"
+                                                id={product.id}
+                                                value={product.amount}
+                                                onClick={addHandler}
+                                            >
+                                                +
+                                            </button>
+                                            <span>{product.amount}</span>
+                                            <button
+                                                name="sub"
+                                                id={product.id}
+                                                value={product.amount}
+                                                onClick={addHandler}
+                                            >
+                                                -
+                                            </button>
+                                        </form>
+                                    ))}
+                            </div>
+                        </NavLink>
                     ))}
             </div>
         </>

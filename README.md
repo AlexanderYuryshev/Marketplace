@@ -14,4 +14,3 @@ Template marketplace for customer on React, Node.js, PostgreSQL and Sequelize
 - Admin type of user for managing products
 - Profile page, more customization for user profile (address etc.)
 - Search in pages with products and orders
-- Pages for products

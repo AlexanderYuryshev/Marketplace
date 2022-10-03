@@ -44,7 +44,6 @@ export const Cart = () => {
                 UserId: auth.userId,
                 orderDate: Date.now(),
                 deliveryDate: date,
-                deliveryAddress: "Moscow, Kremlin",
                 products: ids,
                 cost: calculateCost(products)
             };

@@ -8,11 +8,12 @@ const router = Router();
 // `-` POST /my-orders \
 router.post("/my-orders", async (req, res) => {
     try {
+        const user = await models.User.findByPk(req.body.UserId);
         const order = await models.Order.create({
             orderDate: req.body.orderDate,
             status: "In progress",
             deliveryDate: req.body.deliveryDate,
-            deliveryAddress: req.body.deliveryAddress,
+            deliveryAddress: user.deliveryAddress,
             cost: req.body.cost
         });
         const cart = await models.Cart.findOne({

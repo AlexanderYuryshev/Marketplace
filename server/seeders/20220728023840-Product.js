@@ -8,7 +8,7 @@ module.exports = {
                 description: "Bla-bla-bla",
                 cost: 1000,
                 vendorInfo: "Good vendor",
-                image: "https://www.istockphoto.com/ru/%D1%84%D0%BE%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%B8/bottled-water"
+                image: ""
             },
             {
                 title: "Bread",
@@ -56,6 +56,55 @@ module.exports = {
                 title: "Eggs",
                 description: "Bla-bla-bla",
                 cost: 3000,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Icecream",
+                description: "Bla-bla-bla",
+                cost: 4000,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Cheese",
+                description: "Bla-bla-bla",
+                cost: 5000,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Potato",
+                description: "Bla-bla-bla",
+                cost: 6000,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Candies",
+                description: "Bla-bla-bla",
+                cost: 200,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Tractor",
+                description: "Bla-bla-bla",
+                cost: 300,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Chicken",
+                description: "Bla-bla-bla",
+                cost: 15000,
+                vendorInfo: "Good vendor",
+                image: ""
+            },
+            {
+                title: "Chocolate",
+                description: "Bla-bla-bla",
+                cost: 1200,
                 vendorInfo: "Good vendor",
                 image: ""
             },

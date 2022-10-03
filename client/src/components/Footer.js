@@ -1,4 +1,5 @@
 import { BsFacebook, BsInstagram } from "react-icons/bs";
+import { NavLink } from "react-router-dom";
 
 export const Footer = () => {
     return (
@@ -6,48 +7,57 @@ export const Footer = () => {
             <div className="footer-container">
                 <div className="footer-content">
                     <li>
-                        <a href="/">Shop</a>
+                        <NavLink to="/">Shop</NavLink>
                     </li>
                     <li>
-                        <a href="/">About</a>
+                        <NavLink to="/">About</NavLink>
                     </li>
                     <li>
-                        <a href="/">FAQ</a>
+                        <NavLink to="/">FAQ</NavLink>
                     </li>
                     <li>
-                        <a href="/">Contact</a>
-                    </li>
-                </div>
-                <div className="footer-content">
-                    <li>
-                        <a href="/">Shipping & Returns</a>
-                    </li>
-                    <li>
-                        <a href="/">Store policy</a>
-                    </li>
-                    <li>
-                        <a href="/">Payment methods</a>
+                        <NavLink to="/">Contact</NavLink>
                     </li>
                 </div>
                 <div className="footer-content">
                     <li>
-                        <a href="/">Contact</a>
+                        <NavLink to="/">Shipping & Returns</NavLink>
                     </li>
                     <li>
-                        <a href="/">+7-123-456-78-90</a>
+                        <NavLink to="/">Store policy</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/">Payment methods</NavLink>
                     </li>
                 </div>
                 <div className="footer-content">
                     <li>
-                        <a href="/">
-                            <img src="./VK_Monochrome_Compact_Logo.svg" alt="VK_logo" width={30+"px"} height={30+"px"}/>
-                        </a>
+                        <NavLink to="/">Contact</NavLink>
                     </li>
                     <li>
-                        <BsFacebook className="logo" />
+                        <NavLink to="/">+7-123-456-78-90</NavLink>
+                    </li>
+                </div>
+                <div className="footer-content">
+                    <li>
+                        <NavLink to="/">
+                            <img
+                                src="./VK_Monochrome_Compact_Logo.svg"
+                                alt="VK_logo"
+                                width={30 + "px"}
+                                height={30 + "px"}
+                            />
+                        </NavLink>
                     </li>
                     <li>
-                        <BsInstagram className="logo" />
+                        <NavLink to="/">
+                            <BsFacebook className="logo" />
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/">
+                            <BsInstagram className="logo" />
+                        </NavLink>
                     </li>
                 </div>
             </div>

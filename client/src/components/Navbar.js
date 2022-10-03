@@ -57,22 +57,22 @@ export const Navbar = () => {
             <div className="navbar-icons">
                 {auth.isAuthentificated && (
                     <NavLink to="/my-orders">
-                        <BsListUl className="nav-button"/>
+                        <BsListUl className="nav-button" />
                     </NavLink>
                 )}
                 {auth.isAuthentificated && (
                     <NavLink to="/cart">
-                        <AiOutlineShoppingCart className="nav-button"/>
+                        <AiOutlineShoppingCart className="nav-button" />
                     </NavLink>
                 )}
                 {auth.isAuthentificated ? (
-                    <a href="/" onClick={logoutHandler}>
-                        <CgLogIn className="nav-button" />
-                    </a>
-                ) : (
-                    <a href="/login">
+                    <NavLink to="/" onClick={logoutHandler}>
                         <CgLogOut className="nav-button" />
-                    </a>
+                    </NavLink>
+                ) : (
+                    <NavLink to="/login">
+                        <CgLogIn className="nav-button" />
+                    </NavLink>
                 )}
             </div>
         </nav>
